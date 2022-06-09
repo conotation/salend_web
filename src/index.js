@@ -45,10 +45,14 @@ router.post('/login', upload.fields([]), (q, s) => {
             s_pw: q.body._pw
         }
     }, (err, res, body) => {
-        s.json(JSON.parse(body))
-        console.log('error: ', err);
-        console.log('statusCode: ', res && res.statusCode)
-        console.log('body: ', body)
+        const data = JSON.parse(body)
+        if (data) {
+            q.session.user = {
+                user_id: data._id
+            }
+            console.log(q.session.user)
+        }
+        s.json(data)
     })
 })
 
@@ -67,13 +71,13 @@ router.post('/signup', upload.fields([]), (q, s) => {
 
     if (!checkEmail(p_id)) {
         console.log('not email')
-        s.json({success: false, msg: "not mail"})
+        s.json({ success: false, msg: "not mail" })
         return;
     }
 
     if (p_pw != p_rpw) {
         console.log('not equal')
-        s.json({success: false, msg: "not equal"})
+        s.json({ success: false, msg: "not equal" })
         return;
     }
 
@@ -91,16 +95,93 @@ router.post('/signup', upload.fields([]), (q, s) => {
     })
 })
 
+router.get('/logout', (req, res) => {
+    var session = req.session;
+    try {
+        if (session.user) {
+            req.session.destroy(err => {
+                if (err)
+                    console.log(err)
+                else
+                    res.redirect("/");
+            }).then();
+        }
+    } catch (e) {
+        console.log(e)
+    }
+    res.redirect('/');
+});
+
 router.get('/manage', (req, res) => {
     res.render('manage', {})
+});
+
+router.post('/manage', upload.fields([]), (q, s) => {   // 작성 중
+    //@TODO DEL
+    console.log(q.body)
+
+    const p_id = q.body._id;
+
+    request.post({
+        url: 'https://api.salend.tk/user/',
+        form: {
+            s_email: p_id,
+            s_pw: p_pw
+        }
+    }, (err, res, body) => {
+        s.json(JSON.parse(body))
+        console.log('error: ', err);
+        console.log('statusCode: ', res && res.statusCode)
+        console.log('body: ', body)
+    })
 });
 
 router.get('/store', (req, res) => {
     res.render('store', {})
 });
 
+router.post('/store', upload.fields([]), (q, s) => {   // 작성 중
+    //@TODO DEL
+    console.log(q.body)
+
+    const p_id = q.body._id;
+
+    request.post({
+        url: 'https://api.salend.tk/user/',
+        form: {
+            s_email: p_id,
+            s_pw: p_pw
+        }
+    }, (err, res, body) => {
+        s.json(JSON.parse(body))
+        console.log('error: ', err);
+        console.log('statusCode: ', res && res.statusCode)
+        console.log('body: ', body)
+    })
+});
+
 router.get('/write', (req, res) => {
     res.render('write', {})
+});
+
+router.post('/write', upload.fields([]), (q, s) => {   // 작성 중
+    //@TODO DEL
+    console.log(q.body)
+
+    const p_id = q.body._id;
+
+    request.post({
+        url: 'https://api.salend.tk/user/',
+        form: {
+            s_email: p_id,
+            s_pw: p_pw
+        }
+    }, (err, res, body) => {
+        s.json(JSON.parse(body))
+        console.log('error: ', err);
+        console.log('statusCode: ', res && res.statusCode)
+        console.log('body: ', body)
+    })
 });
 
 

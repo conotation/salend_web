@@ -23,8 +23,17 @@ function signup() {
         .then((res) => res.json())
         .then((data) => {
             console.log(data)
+            if (data.code == 11000) {
+                alert("회원가입 실패(이메일 중복)")
+                return;
+            }
+            
             if (data.success) {
                 console.log(data)
+
+                alert("회원가입 성공")
+                window.location.href = "login"
+                return false;
             }
             console.log(data.msg)
         }).catch(err => {

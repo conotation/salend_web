@@ -19,8 +19,9 @@ function login() {
         .then((res) => res.json())
         .then((data) => {
             console.log(data)
-            if (data.success) {
-                console.log(data)
+            if (data) {
+                window.location.href = "store"
+                return false;
             }
             console.log(data.msg)
         }).catch(err => {
