@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lnag="UTF-8">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Salend : 회원가입</title>
+    <link rel="stylesheet" href="css/join.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="js/join.js"></script>
+</head>
+
+<body>
+    <!-- header -->
+    <div id="header">
+        <img src="res/logo.png" id="logo">
+    </div>
+    <!-- wrapper -->
+    <br />
+    <p class="tag" style="margin-bottom: 0">Sign Up</p>
+    <div id="wrapper">
+        <!-- content-->
+        <div id="content">
+            <!-- ID -->
+            <div>
+                <h3 class="join_title">
+                    <label for="id">아이디</label>
+                </h3>
+                <span class="box int_id">
+                    <input type="text" id="fid" class="int" maxlength="20" placeholder="salend@email.com">
+                </span>
+                <span class="error_next_box"></span>
+            </div>
+            <!-- PW1 -->
+            <div>
+                <h3 class="join_title"><label for="pswd1">비밀번호</label></h3>
+                <span class="box int_pass">
+                    <input type="password" id="fpw" class="int" maxlength="20" placeholder="Password">
+                    <span id="alertTxt">사용불가</span>
+                </span>
+                <span class="error_next_box"></span>
+            </div>
+            <!-- PW2 -->
+            <div>
+                <h3 class="join_title"><label for="pswd2">비밀번호 재확인</label></h3>
+                <span class="box int_pass_check">
+                    <input type="password" id="rpw" class="int" maxlength="20" placeholder="Password">
+                </span>
+                <span class="error_next_box"></span>
+            </div>
+            <!-- JOIN BTN-->
+            <div class="btn_area">
+                <button type="button" id="btnJoin">
+                    <span>이 정보로 가입</span>
+                </button>
+            </div>
+            <div id="back">
+                <span>로그인으로 돌아가기 </span>
+            </div>
+        </div>
+        <!-- content-->
+    </div>
+    <!-- wrapper -->
+</body>
+
+</html>
