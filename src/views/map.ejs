@@ -7,49 +7,83 @@
     <title>get</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=da8322b3e666b7e54a05694adbd91cfc&libraries=services"></script>
-</head>
-<script type="text/javascript">
-let getLocation = () => {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-            let lat = position.coords.latitude
-            let lng = position.coords.longitude
-            console.log(lat + "/" + lng)
-            let Latlng = new kakao.maps.LatLng(lat, lng)
-            let marker = new kakao.maps.Marker({
-                position: Latlng,
-                clickable: true
-            })
-
-            marker.setMap(map);
-            let screen = '<div onclick="javascript:alert('XXXXX')"></div>'
-            var infowindow = new kakao.maps.InfoWindow({
-                content: screen
-            });
-
-            marker.setDraggable(true);
-
-            kakao.maps.event.addListener(marker, 'click', () => {
-                infowindow(map, marker)
-            })
-
-            // map.setCenter()
-            map.panTo(Latlng)
-        })
+    <style type="text/css">
+    #po {
+        font-size: 14px;
+        color: #8844ff;
     }
-}
-
-$(document).ready(() => {
-    getLocation()
-});
-</script>
+    </style>
+</head>
 
 <body>
+    <script type="text/javascript">
+    function searchAddrFromCoords(coords, callback) {
+        // 좌표로 행정동 주소 정보를 요청합니다
+        geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);
+    }
+    var geocoder = new kakao.maps.services.Geocoder();
+
+    let saveLocation = (position) {
+        searchDetailAddrFromCoords(position, function(result, status) {
+            if (status === kakao.maps.services.Status.OK) {
+            var detailAddr = !!result[0].road_address ? result[0].road_address.address_name : result[0].address.address_name;
+
+            let lat = opener.document.getElementById("s_lat")
+            lat.innerHTML = "" + position.getLat()
+            // opener.document.getElementById("s_certified").innerHTML = "A"
+            let lng = opener.document.getElementById("s_lng")
+            lng.innerHTML = "" + position.getLng();
+
+            let addr = opener.document.getElementById("s_address1")
+            addr.innerHTML = detailAddr
+            let addr2 = opener.document.getElementById("s_address")
+            addr2.disabled = false
+        }
+    });
+
+    }
+
+
+    let getLocation = () => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                let lat = position.coords.latitude
+                let lng = position.coords.longitude
+                console.log(lat + "/" + lng)
+                let Latlng = new kakao.maps.LatLng(lat, lng)
+                let marker = new kakao.maps.Marker({
+                    position: Latlng,
+                    clickable: true
+                })
+
+                marker.setMap(map);
+                let screen = '<div onclick="javascript:saveLocation(marker.getPosition())">주소 저장하기</div>'
+                var infowindow = new kakao.maps.InfoWindow({
+                    content: screen
+                });
+
+                marker.setDraggable(true);
+
+                kakao.maps.event.addListener(marker, 'click', () => {
+                    infowindow.open(map, marker)
+                })
+
+                // map.setCenter()
+                map.panTo(Latlng)
+            })
+        }
+    }
+
+    $(document).ready(() => {
+        getLocation()
+    });
+    </script>
     <div id='map' style="width:100%;height: 750px;"></div>
     <script type="text/javascript">
     let container = document.getElementById('map')
 
     let options = {
+        center: new kakao.maps.LatLng(33.450701, 126.570667),
         level: 3
     }
     let map = new kakao.maps.Map(container, options)
