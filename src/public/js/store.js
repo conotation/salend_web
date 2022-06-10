@@ -66,10 +66,10 @@ function update() {
     } else {
         formData.append('s_image', imagetag.src)
     }
-    if (flat.value) {
+    if (flat.innerText) {
         formData.append('s_lat', flat.innerText)
     }
-    if (flng.value) {
+    if (flng.innerText) {
         formData.append('s_lng', flng.innerText)
     }
 
