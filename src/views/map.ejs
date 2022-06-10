@@ -21,26 +21,33 @@
         // 좌표로 행정동 주소 정보를 요청합니다
         geocoder.coord2RegionCode(coords.getLng(), coords.getLat(), callback);
     }
+
+    function searchDetailAddrFromCoords(coords, callback) {
+        // 좌표로 법정동 상세 주소 정보를 요청합니다
+        geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
+    }
     var geocoder = new kakao.maps.services.Geocoder();
+    let marker = null
 
     let saveLocation = (position) {
         searchDetailAddrFromCoords(position, function(result, status) {
             if (status === kakao.maps.services.Status.OK) {
-            var detailAddr = !!result[0].road_address ? result[0].road_address.address_name : result[0].address.address_name;
+                var detailAddr = !!result[0].road_address ? result[0].road_address.address_name : result[0].address.address_name;
 
-            let lat = opener.document.getElementById("s_lat")
-            lat.innerHTML = "" + position.getLat()
-            // opener.document.getElementById("s_certified").innerHTML = "A"
-            let lng = opener.document.getElementById("s_lng")
-            lng.innerHTML = "" + position.getLng();
+                let lat = opener.document.getElementById("s_lat")
+                lat.innerText = "" + position.getLat()
+                // opener.document.getElementById("s_certified").innerText = "A"
+                let lng = opener.document.getElementById("s_lng")
+                lng.innerText = "" + position.getLng();
 
-            let addr = opener.document.getElementById("s_address1")
-            addr.innerHTML = detailAddr
-            let addr2 = opener.document.getElementById("s_address")
-            addr2.disabled = false
-        }
-    });
+                let addr = opener.document.getElementById("s_address1")
+                addr.value = detailAddr
 
+                let addr2 = opener.document.getElementById("s_address")
+                addr2.disabled = false
+                window.close()
+            }
+        });
     }
 
 
@@ -51,7 +58,7 @@
                 let lng = position.coords.longitude
                 console.log(lat + "/" + lng)
                 let Latlng = new kakao.maps.LatLng(lat, lng)
-                let marker = new kakao.maps.Marker({
+                marker = new kakao.maps.Marker({
                     position: Latlng,
                     clickable: true
                 })
@@ -62,13 +69,10 @@
                     content: screen
                 });
 
-                marker.setDraggable(true);
-
                 kakao.maps.event.addListener(marker, 'click', () => {
                     infowindow.open(map, marker)
                 })
 
-                // map.setCenter()
                 map.panTo(Latlng)
             })
         }
