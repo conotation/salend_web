@@ -2,8 +2,7 @@
 
 let certified = false;
 let image = "";
-let lng = null;
-let lat = null;
+
 
 let imagetag = null;
 
@@ -48,7 +47,10 @@ function update() {
     const fname = document.getElementById("s_name");
     const ftime = document.getElementById("s_time");
     const fadd = document.getElementById("s_address");
+    const fadd2 = document.getElementById("s_address1");
     const fcer = document.getElementById("s_certified");
+    const flat = document.getElementById("s_lat");
+    const flng = document.getElementById("s_lng");
 
     if (fname.value) {
         formData.append('s_name', fname.value)
@@ -56,17 +58,17 @@ function update() {
     if (ftime.value) {
         formData.append('s_time', ftime.value)
     }
-    if (fadd.value) {
-        formData.append('s_id', fadd.value)
+    if (fadd2.value) {
+        formData.append('s_id', fadd2.value + fadd.value)
     }
     if (image) {
         formData.append('s_image', image)
     }
-    if (lat) {
-        formData.append('lat', lat)
+    if (flat.value) {
+        formData.append('lat', flat.value)
     }
-    if (lng) {
-        formData.append('s_id', lng)
+    if (flng.value) {
+        formData.append('s_id', flng.value)
     }
 
     const options = {
