@@ -21,7 +21,7 @@ function upload(view) {
     .then((res) => res.json())
         .then((data) => {
             if(data.success){
-                imagetag.src = document.URL + "image/" + data.filename;
+                imagetag.src = document.URL + "/image/" + data.filename;
 //                imagetag.src = "http://localhost:8001/" + "image/" + data.filename;
                 image = imagetag.src
                 console.log(imagetag.src)
@@ -71,31 +71,23 @@ function update() {
         formData.append('s_lng', flng.value)
     }
 
+    formData.append('x_id', window.ID)
+
     const options = {
-        method: "PUT",
+        method: "POST",
         body: formData,
     }
 
     console.log(formData)
 
     //fetch("https://api.salend.tk/user/signup", options)
-    fetch('https://api.salend.tk/user/' + window.ID, options)
+    fetch('store', options)
         .then((res) => res.json())
         .then((data) => {
             console.log(data)
-            if (data.code == 11000) {
-                alert("회원가입 실패(이메일 중복)")
-                return;
-            }
-
-            if (data.success) {
-                console.log(data)
-
-                alert("회원가입 성공")
-                window.location.href = "login"
-                return false;
-            }
-            console.log(data.msg)
+            alert("갱신 완료")
+            location.reload();
+            return false;
         }).catch(err => {
             console.error(new Error(err));
         });

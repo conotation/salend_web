@@ -196,20 +196,20 @@ router.get('/store', (req, res) => {
     res.render('store', inData)
 });
 
-router.post('/store', upload.fields([]), (q, s) => { // 작성 중
+router.post('/store', upload.fields([]), (q, s) => {
     //@TODO DEL
     console.log(q.body)
+    console.log(typeof q.body)
 
-    const p_id = q.body._id;
-
-    request.post({
-        url: 'https://api.salend.tk/user/',
-        form: {
-            s_email: p_id,
-            s_pw: p_pw
-        }
+    request.put({
+        url: 'https://api.salend.tk/user/' + q.body.x_id,
+        form:  q.body
     }, (err, res, body) => {
-        s.json(JSON.parse(body))
+        let data = JSON.parse(body)
+        s.json(data)
+        q.session.user = {
+            data: data
+        }
         console.log('error: ', err);
         console.log('statusCode: ', res && res.statusCode)
         console.log('body: ', body)
