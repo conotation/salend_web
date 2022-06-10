@@ -21,7 +21,7 @@ function upload(view) {
     .then((res) => res.json())
         .then((data) => {
             if(data.success){
-                imagetag.src = document.URL + "/image/" + data.filename;
+                imagetag.src = window.location.origin + "/image/" + data.filename;
 //                imagetag.src = "http://localhost:8001/" + "image/" + data.filename;
                 image = imagetag.src
                 console.log(imagetag.src)
