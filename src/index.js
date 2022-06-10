@@ -3,14 +3,16 @@
 const express = require('express')
 const path = require('path')
 const request = require('request')
+const fs = require('fs')
 
 const router = express.Router()
+const sharp = require('sharp')
 const multer = require('multer')
 
 const upload = multer({
     storage: multer.diskStorage({
         destination(req, file, cb) {
-            cb(null, path.resolve(__dirname + '/../public/image/'));
+            cb(null, path.resolve(__dirname + '/public/image/'));
         },
         filename(req, file, cb) {
             const ext = path.extname(file.originalname);
@@ -46,13 +48,18 @@ router.post('/login', upload.fields([]), (q, s) => {
         }
     }, (err, res, body) => {
         const data = JSON.parse(body)
-        if (data) {
+        console.log(res.statusCode)
+        if (res.statusCode == 200) {
+            data['success'] = true
             q.session.user = {
-                user_id: data._id
+                user_id: data._id,
+                data: data
             }
+            s.json(data)
             console.log(q.session.user)
+        } else {
+            s.json(data)
         }
-        s.json(data)
     })
 })
 
@@ -99,24 +106,54 @@ router.get('/logout', (req, res) => {
     var session = req.session;
     try {
         if (session.user) {
-            req.session.destroy(err => {
-                if (err)
-                    console.log(err)
-                else
-                    res.redirect("/");
-            }).then();
+            req.session.destroy(() => {
+                req.session
+            })
         }
     } catch (e) {
         console.log(e)
     }
-    res.redirect('/');
+    res.redirect('/login');
 });
+
+// 이미지 업로드
+router.post('/upload', upload.single('image'), (req, res) => {
+    let response = {}
+    // image name = 'image'
+    // 매장 자유 사이즈, 상품 400:400
+    try {
+        sharp(req.file.path)
+            .resize({
+                fit: 'fill',
+                width: 400,
+            })
+            .withMetadata()
+            .png()
+            .toBuffer((err, buffer) => {
+                if (err) throw err;
+                fs.writeFile(req.file.path, buffer, (err) => {
+                    if (err) throw err;
+                });
+            });
+    } catch (err) {
+        console.log(err)
+        response = { success: false, msg:"Image Upload Failed"}
+        res.status(400).json(response)
+        return
+    }
+    response = { success: true, filename: req.file.filename }
+    res.json(response);
+});
+
+router.get('/map', (req, res) => {
+    res.render('map')
+})
 
 router.get('/manage', (req, res) => {
     res.render('manage', {})
 });
 
-router.post('/manage', upload.fields([]), (q, s) => {   // 작성 중
+router.post('/manage', upload.fields([]), (q, s) => { // 작성 중
     //@TODO DEL
     console.log(q.body)
 
@@ -137,10 +174,25 @@ router.post('/manage', upload.fields([]), (q, s) => {   // 작성 중
 });
 
 router.get('/store', (req, res) => {
-    res.render('store', {})
+    if(!req.session.user)
+        res.redirect('login')
+    const data = req.session.user.data
+    console.log(data)
+
+    const inData = {
+        id: data._id,
+        name: data.s_name || "",
+        time: data.s_time || "",
+        address: data.s_location || "",
+        certified: "" + data.s_certified,
+        image: data.s_image || "res/default.png"
+    }
+    console.log(inData)
+
+    res.render('store', inData)
 });
 
-router.post('/store', upload.fields([]), (q, s) => {   // 작성 중
+router.post('/store', upload.fields([]), (q, s) => { // 작성 중
     //@TODO DEL
     console.log(q.body)
 
@@ -164,7 +216,7 @@ router.get('/write', (req, res) => {
     res.render('write', {})
 });
 
-router.post('/write', upload.fields([]), (q, s) => {   // 작성 중
+router.post('/write', upload.fields([]), (q, s) => { // 작성 중
     //@TODO DEL
     console.log(q.body)
 

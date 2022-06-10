@@ -19,9 +19,11 @@ function login() {
         .then((res) => res.json())
         .then((data) => {
             console.log(data)
-            if (data) {
+            if(data.success) {
                 window.location.href = "store"
                 return false;
+            } else {
+                alert("일치하는 정보가 없습니다.");
             }
             console.log(data.msg)
         }).catch(err => {

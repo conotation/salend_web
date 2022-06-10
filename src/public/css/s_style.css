@@ -369,3 +369,20 @@ a {
     border: 0;
     resize: vertical;
 }
+
+
+/* =================== Conotation 작성 ============*/
+
+.info_2 a{
+    display: inline-block;
+    min-width: 60px;
+    margin-left: 10px;
+    margin-right: 16px;
+    padding: 10px;
+    border: 1px solid #4BC5A0;
+    border-radius: 2px;
+    font-size: 1.4rem;
+    background: #4BC5A0;
+    color:#fff;
+}
+
