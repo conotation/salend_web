@@ -29,7 +29,7 @@
     var geocoder = new kakao.maps.services.Geocoder();
     let marker = null
 
-    let saveLocation = (position) {
+    let saveLocation = (position) => {
         searchDetailAddrFromCoords(position, function(result, status) {
             if (status === kakao.maps.services.Status.OK) {
                 var detailAddr = !!result[0].road_address ? result[0].road_address.address_name : result[0].address.address_name;

@@ -21,8 +21,8 @@ function upload(view) {
     .then((res) => res.json())
         .then((data) => {
             if(data.success){
-//                imagetag.src = document.URL + "image/" + data.filename;
-                imagetag.src = "http://localhost:8001/" + "image/" + data.filename;
+                imagetag.src = document.URL + "image/" + data.filename;
+//                imagetag.src = "http://localhost:8001/" + "image/" + data.filename;
                 image = imagetag.src
                 console.log(imagetag.src)
             } else {
@@ -65,21 +65,21 @@ function update() {
         formData.append('s_image', image)
     }
     if (flat.value) {
-        formData.append('lat', flat.value)
+        formData.append('s_lat', flat.value)
     }
     if (flng.value) {
-        formData.append('s_id', flng.value)
+        formData.append('s_lng', flng.value)
     }
 
     const options = {
-        method: "POST",
+        method: "PUT",
         body: formData,
     }
 
     console.log(formData)
 
     //fetch("https://api.salend.tk/user/signup", options)
-    fetch('user/' + window.ID, options)
+    fetch('https://api.salend.tk/user/' + window.ID, options)
         .then((res) => res.json())
         .then((data) => {
             console.log(data)
