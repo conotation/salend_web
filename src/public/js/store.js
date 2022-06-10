@@ -59,16 +59,18 @@ function update() {
         formData.append('s_time', ftime.value)
     }
     if (fadd2.value) {
-        formData.append('s_id', fadd2.value + fadd.value)
+        formData.append('s_location', fadd2.value + fadd.value)
     }
     if (image) {
         formData.append('s_image', image)
+    } else {
+        formData.append('s_image', imagetag.src)
     }
     if (flat.value) {
-        formData.append('s_lat', flat.value)
+        formData.append('s_lat', flat.innerText)
     }
     if (flng.value) {
-        formData.append('s_lng', flng.value)
+        formData.append('s_lng', flng.innerText)
     }
 
     formData.append('x_id', window.ID)
