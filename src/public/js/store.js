@@ -59,7 +59,7 @@ function update() {
         formData.append('s_time', ftime.value)
     }
     if (fadd2.value) {
-        formData.append('s_location', fadd2.value + fadd.value)
+        formData.append('s_address', fadd2.value + fadd.value)
     }
     if (image) {
         formData.append('s_image', image)
@@ -67,10 +67,10 @@ function update() {
         formData.append('s_image', imagetag.src)
     }
     if (flat.innerText) {
-        formData.append('s_lat', flat.innerText)
+        formData.append('lat', flat.innerText)
     }
     if (flng.innerText) {
-        formData.append('s_lng', flng.innerText)
+        formData.append('lng', flng.innerText)
     }
 
     formData.append('x_id', window.ID)
