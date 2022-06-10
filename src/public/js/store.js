@@ -37,9 +37,9 @@ function upload(view) {
 
 function setAddress() {
     window.name = "parent"
-    openChild = window.open('map',
+    let openChild = window.open('map',
         "child", "width=600px;height=450px;resizable=no;scrollbars=no")
-    
+
 }
 
 function update() {
