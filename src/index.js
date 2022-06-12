@@ -127,11 +127,10 @@ router.post('/upload', upload.single('image'), (req, res) => {
     // 매장 자유 사이즈, 상품 400:400
     try {
         let size = {
-                fit: 'fill',
                 width: 400,
             }
 
-        if(req.params.item){
+        if(req.body.item){
             size['height'] = 400
         }
 

@@ -110,29 +110,29 @@ a {
     font-weight: 600;
 }
 
-.board_list .num {
-    width: 10%;
+.board_list .image {
+    width: 20%;
 }
 
 .board_list .title {
     width: 60%;
     text-align: left;
+    line-height: 30px;
 }
 
 .board_list .top .title {
     text-align: center;
+    line-height: 30px;
 }
 
-.board_list .writer {
+.board_list .price {
     width: 10%;
+    line-height: 30px;
 }
 
 .board_list .date {
     width: 10%;
-}
-
-.board_list .count {
-    width: 10%;
+    line-height: 30px;
 }
 
 .board_page {
@@ -164,8 +164,8 @@ a {
 }
 
 .board_page a.num.on {
-    border-color: #000;
-    background: #000;
+    border-color: #4BC5A0;
+    background: #4BC5A0;
     color: #fff;
 }
 
@@ -369,20 +369,3 @@ a {
     border: 0;
     resize: vertical;
 }
-
-
-/* =================== Conotation 작성 ============*/
-
-.info_2 a{
-    display: inline-block;
-    min-width: 60px;
-    margin-left: 10px;
-    margin-right: 16px;
-    padding: 10px;
-    border: 1px solid #4BC5A0;
-    border-radius: 2px;
-    font-size: 1.4rem;
-    background: #4BC5A0;
-    color:#fff;
-}
-
