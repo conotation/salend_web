@@ -126,11 +126,17 @@ router.post('/upload', upload.single('image'), (req, res) => {
     // image name = 'image'
     // 매장 자유 사이즈, 상품 400:400
     try {
-        sharp(req.file.path)
-            .resize({
+        let size = {
                 fit: 'fill',
                 width: 400,
-            })
+            }
+
+        if(req.params.item){
+            size['height'] = 400
+        }
+
+        sharp(req.file.path)
+            .resize(size)
             .withMetadata()
             .png()
             .toBuffer((err, buffer) => {
@@ -217,23 +223,31 @@ router.post('/store', upload.fields([]), (q, s) => {
 });
 
 router.get('/write', (req, res) => {
-    res.render('write', {})
+    if(!req.session.user)
+        res.redirect('login')
+    const data = req.session.user.data;
+
+    let inData = {
+        id: data._id,
+        name: data.s_name
+    }
+
+    res.render('write', inData)
 });
 
 router.post('/write', upload.fields([]), (q, s) => { // 작성 중
     //@TODO DEL
     console.log(q.body)
 
-    const p_id = q.body._id;
+    const data = q.body;
 
     request.post({
-        url: 'https://api.salend.tk/user/',
-        form: {
-            s_email: p_id,
-            s_pw: p_pw
-        }
+        url: 'https://api.salend.tk/item',
+        form: data
     }, (err, res, body) => {
-        s.json(JSON.parse(body))
+        const result = JSON.parse(body)
+        console.log(result)
+        s.json(result)
         console.log('error: ', err);
         console.log('statusCode: ', res && res.statusCode)
         console.log('body: ', body)

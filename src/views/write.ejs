@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/css.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="js/store.js"></script>
+    <script src="js/write.js"></script>
 </head>
 <body>
     <nav>
@@ -40,61 +40,66 @@
                 <div class="title">
                     <dl>
                         <dt>제목</dt>
-                        <dd><input type="text" id="fProduct" placeholder="제목 입력"></dd>
+                        <dd><input type="text" id="f_name" placeholder="제목 입력" ></dd>
                     </dl>
                 </div>
                 <div class="info">
                     <dl>
                         <dt>원가</dt>
-                        <dd><input type="price_1" id="fPrice" placeholder="가격 입력"></dd>
+                        <dd><input type="price_1" id="f_price" placeholder="가격 입력" ></dd>
                     </dl>
                     <dl>
                         <dt>할인가</dt>
-                        <dd><input type="price_1" id="fPrice2" placeholder="할인가 입력"></dd>
+                        <dd><input type="price_1" id="f_price2" placeholder="할인가 입력" ></dd>
                     </dl>
                 </div>
                 <div class="info_2">
                     <dl>
                         <dt>할인율</dt>
-                        <dd><input type="text_2" id="fSale" placeholder="할인율"></dd>
+                        <dd><input type="text_2" id="f_sale" placeholder="할인율" disabled></dd>
                     </dl>
                     <dl>
                         <dt>유통기한</dt>
-                        <dd><input type="text_2" id="fexp" placeholder="MM/DD"></dd>
+                        <dd><input type="date" id="f_exp" placeholder="MM/DD" value="<%= new Date(+new Date() + 3240 * 10000).toISOString().split('T')[0] %>"></dd>
                     </dl>
                 </div>
                 <div class="tag">
                     <dl>
                         <dt>카테고리</dt>
                     <span class="category">
-                        <select id="fpick" class="sel">
+                        <select id="f_pick" class="sel">
                             <option>선택 안함</option>
-                                    <option value="01">한식</option>
-                                    <option value="02">일식</option>
-                                    <option value="03">중식</option>
-                                    <option value="04">양식</option>
-                                    <option value="05">분식</option>
-                                    <option value="06">카페</option>
-                                    <option value="07">편의점</option>
-                                    <option value="08">베이커리</option>
+                                    <option value="1">한식</option>
+                                    <option value="2">일식</option>
+                                    <option value="3">중식</option>
+                                    <option value="4">양식</option>
+                                    <option value="5">분식</option>
+                                    <option value="6">카페</option>
+                                    <option value="7">편의점</option>
+                                    <option value="8">베이커리</option>
                         </select>
                     </span>
                     </dl>
                 </div>
                 
-                <div class="button">
+                <div class="button" id="submit">
                 </div>
-                <input type="file" id="fImage" name="image" accept="image/*" onchange="loadFile(this)">
+                <img id="imgtag" style="width:0px;height: 0px;"><br />
+                <input type="file" id="chooseFile" name="image" accept="image/*" onchange="upload(this)">
                 
                 <div class="cont">
                     <textarea placeholder="내용 입력"></textarea>
                 </div>
             </div>
             <div class="bt_wrap">
-                <a href=".html" class="on">등록</a>
-                <a href=".html">취소</a>
+                <a id="submit" href="javascript:update()" class="on">등록</a>
+                <a href="manage">취소</a>
             </div>
         </div>
     </div>
+    <script>
+        window.ID = "<%= id %>";
+        window.NAME = "<%= name %>";
+    </script>
 </body>
 </html>

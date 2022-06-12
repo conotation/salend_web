@@ -42,6 +42,7 @@ function setAddress() {
 }
 
 function update() {
+    console.log("눌리고잇어요")
     const formData = new FormData();
 
     const fname = document.getElementById("s_name");
@@ -87,17 +88,12 @@ function update() {
         .then((res) => res.json())
         .then((data) => {
             console.log(data)
-            alert("갱신 완료")
+            alert("갱신 성공")
             location.reload();
             return false;
         }).catch(err => {
             console.error(new Error(err));
         });
-}
-
-function back() {
-    window.location.href = "login"
-    return false;
 }
 
 $(document).ready(() => {
