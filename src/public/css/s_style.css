@@ -115,7 +115,7 @@ a {
 }
 
 .board_list .title {
-    width: 60%;
+    width: 45%;
     text-align: left;
     line-height: 30px;
 }
@@ -126,11 +126,16 @@ a {
 }
 
 .board_list .price {
-    width: 10%;
+    width: 15%;
     line-height: 30px;
 }
 
 .board_list .date {
+    width: 10%;
+    line-height: 30px;
+}
+
+.board_list .state{
     width: 10%;
     line-height: 30px;
 }

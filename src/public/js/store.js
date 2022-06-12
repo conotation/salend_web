@@ -38,7 +38,26 @@ function setAddress() {
     window.name = "parent"
     let openChild = window.open('map',
         "child", "width=600px;height=450px;resizable=no;scrollbars=no")
+}
 
+function setCertify(){
+    const formData = new FormData();
+    const id = "" + window.ID;
+
+    formData.append('_id', id)
+    console.log(formData.get('_id'))
+    const options = {
+        method: "POST",
+        body: formData
+    }
+
+    fetch("certified", options)
+    .then((res) => res.json())
+    .then((data) => {
+        if(data.success){
+            alert("인증 성공");
+        }
+    })
 }
 
 function update() {

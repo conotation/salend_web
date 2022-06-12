@@ -13,25 +13,7 @@
 </head>
 
 <body>
-    <nav>
-        <ul class="menu">
-            <li class="material-symbols-outlined">
-                <a href="write">
-                    menu 상품 등록
-                </a>
-            </li>
-            <li class="material-symbols-outlined">
-                <a href="manage">
-                    menu 상품 관리
-                </a>
-            </li>
-            <li class="material-symbols-outlined">
-                <a href="#">
-                    menu 매장 설정
-                </a>
-            </li>
-        </ul>
-    </nav>
+    <%-include('nav.ejs') %>
     <div class="board_wrap">
         <div class="board_title">
             <strong>매장 설정</strong>
@@ -51,16 +33,16 @@
                         <dd><input id="s_time" type="price_1" placeholder="00:00 ~ 24:00" value="<%= time %>"></dd>
                     </dl>
                 </div>
-                <div class="info_2">
-                    <dl style="width:1000px">
+                <div class="certify">
+                    <dl style="width:1200px">
                         <dt>매장 주소</dt>
-                        <dd ><a href="javascript:setAddress()">주소 설정</a><input id="s_address1" type="text_2" placeholder="도로명 주소" value="<%= address %>" disabled> <input id="s_address" type="text_2" placeholder="상세 주소" value="<%= address %>" disabled></dd><span id="s_lat"></span><span id="s_lng"></span>
+                        <a href="javascript:setAddress()">주소 설정</a><input id="s_address1" type="text_2" placeholder="도로명 주소" style="height: 40px;margin-left: 8px" value="<%= address %>" disabled>&nbsp;<input style="height: 40px;margin-left: 4px" id="s_address" type="text_2" placeholder="상세 주소" value="<%= address %>" disabled>&nbsp;<span id="s_lat"></span><span id="s_lng"></span>
                     </dl>
                 </div>
                 <div class="certify">
                     <dl>
                         <dt>매장 인증</dt>
-                        <a href="javascript:">인증 받기</a>
+                        <a href="javascript:setCertify()">인증 받기</a>
                         <p id="s_certified">
                             <%= certified %>
                         </p>

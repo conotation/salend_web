@@ -158,28 +158,21 @@ router.get('/map', (req, res) => {
     res.render('map')
 })
 
-router.get('/manage', (req, res) => {
-    res.render('manage', {})
+router.get('/manage', (q, s) => {
+    if (!q.session.user)
+        s.redirect('/login')
+    request.get({
+        url: 'https://api.salend.tk/store/' + q.session.user.user_id
+    }, (err, res, body) => {
+        let data = JSON.parse(body);
+        console.log(data);
+        s.render('manage', data)
+    });
 });
 
 router.post('/manage', upload.fields([]), (q, s) => { // 작성 중
     //@TODO DEL
     console.log(q.body)
-
-    const p_id = q.body._id;
-
-    request.post({
-        url: 'https://api.salend.tk/user/',
-        form: {
-            s_email: p_id,
-            s_pw: p_pw
-        }
-    }, (err, res, body) => {
-        s.json(JSON.parse(body))
-        console.log('error: ', err);
-        console.log('statusCode: ', res && res.statusCode)
-        console.log('body: ', body)
-    })
 });
 
 router.get('/store', (req, res) => {
@@ -220,6 +213,19 @@ router.post('/store', upload.fields([]), (q, s) => {
         console.log('body: ', body)
     })
 });
+
+router.post('/certified', (q, s) => {
+    if(!q.session.user)
+        s.redirect('login')
+    const url = 'https://api.salend.tk/user/certified/' + q.session.user.user_id
+    console.log(url);
+    request.put({
+        url: url
+    }, (err, res, body) => {
+        let data = JSON.parse(body)
+        s.json(data);
+    })
+})
 
 router.get('/write', (req, res) => {
     if(!req.session.user)
