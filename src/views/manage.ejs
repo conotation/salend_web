@@ -28,7 +28,11 @@
                 </div>
                 <% for(var i = 0; i < items.length; i++) { %>
                 <div>
-                    <div class="image"><img src="<%= items[i].i_image %>" style="width: 5vw; min-width: 40px;"></div>
+                    <% 
+                        var string = items[i].i_image
+                        var img = string.substr(string.search('/image/', 4))
+                    %>
+                    <div class="image"><img src="<%= img %>" style="width: 5vw; min-width: 40px;"></div>
                     <div class="title">
                         <%= items[i].i_name %>
                     </div>
