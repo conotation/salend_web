@@ -127,10 +127,10 @@ router.post('/upload', upload.single('image'), (req, res) => {
     // 매장 자유 사이즈, 상품 400:400
     try {
         let size = {
-                width: 400,
-            }
+            width: 400,
+        }
 
-        if(req.body.item){
+        if (req.body.item) {
             size['height'] = 400
         }
 
@@ -146,7 +146,7 @@ router.post('/upload', upload.single('image'), (req, res) => {
             });
     } catch (err) {
         console.log(err)
-        response = { success: false, msg:"Image Upload Failed"}
+        response = { success: false, msg: "Image Upload Failed" }
         res.status(400).json(response)
         return
     }
@@ -176,22 +176,35 @@ router.post('/manage', upload.fields([]), (q, s) => { // 작성 중
 });
 
 router.get('/store', (req, res) => {
-    if(!req.session.user)
+    if (!req.session.user)
         res.redirect('login')
-    const data = req.session.user.data
-    console.log(data)
 
-    const inData = {
-        id: data._id,
-        name: data.s_name || "",
-        time: data.s_time || "",
-        address: data.s_location || "",
-        certified: "" + data.s_certified,
-        image: data.s_image || "res/default.png"
-    }
-    console.log(inData)
+    let url = 'https://api.salend.tk/user/' + req.session.user.user_id;
+    console.log(req.session.user);
 
-    res.render('store', inData)
+    request.get({
+        url: url
+    }, (err, s, body) => {
+        let data = JSON.parse(body).store;
+        console.log(data)
+        if (data.success == true) {
+            req.session.user = {
+                data: data
+            }
+        }
+
+        const inData = {
+            id: data._id,
+            name: data.s_name || "",
+            time: data.s_time || "",
+            address: data.s_address || "",
+            certified: "" + data.s_certified,
+            image: data.s_image || "res/default.png"
+        }
+        console.log(inData)
+
+        res.render('store', inData)
+    })
 });
 
 router.post('/store', upload.fields([]), (q, s) => {
@@ -201,13 +214,11 @@ router.post('/store', upload.fields([]), (q, s) => {
 
     request.put({
         url: 'https://api.salend.tk/user/' + q.body.x_id,
-        form:  q.body
+        form: q.body
     }, (err, res, body) => {
         let data = JSON.parse(body)
         s.json(data)
-        q.session.user = {
-            data: data
-        }
+
         console.log('error: ', err);
         console.log('statusCode: ', res && res.statusCode)
         console.log('body: ', body)
@@ -215,7 +226,7 @@ router.post('/store', upload.fields([]), (q, s) => {
 });
 
 router.post('/certified', (q, s) => {
-    if(!q.session.user)
+    if (!q.session.user)
         s.redirect('login')
     const url = 'https://api.salend.tk/user/certified/' + q.session.user.user_id
     console.log(url);
@@ -228,7 +239,7 @@ router.post('/certified', (q, s) => {
 })
 
 router.get('/write', (req, res) => {
-    if(!req.session.user)
+    if (!req.session.user)
         res.redirect('login')
     const data = req.session.user.data;
 

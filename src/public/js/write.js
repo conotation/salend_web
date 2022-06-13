@@ -21,7 +21,9 @@ function upload(view) {
             if (data.success) {
                 imagetag.src = window.location.origin + "/image/" + data.filename;
                 //                imagetag.src = "http://localhost:8001/" + "image/" + data.filename;
-                image = imagetag.src
+                image = "/image/" + data.filename;
+                imagetag.style.width = "300px";
+                imagetag.style.height = "300px";
                 console.log(imagetag.src)
             } else {
                 alert("업로드 실패")
