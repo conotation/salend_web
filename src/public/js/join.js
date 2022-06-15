@@ -8,8 +8,8 @@ function signup() {
     const rpw = document.getElementById("rpw");
 
     formData.append('_id', fid.value)
-    formData.append('_pw', fpw.value)
-    formData.append('_rpw', rpw.value)
+    formData.append('_pw', sha256(fpw.value))
+    formData.append('_rpw', sha256(rpw.value))
 
     const options = {
         method: "POST",

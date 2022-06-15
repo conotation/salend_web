@@ -8,6 +8,77 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/s_css.css">
+    <style>
+    div.image>img {
+        width: 100px;
+        height: 100px;
+    }
+
+    div.title {
+        display: inline;
+    }
+
+    div.p1 {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        padding: 12px;
+        gap: 4px;
+
+        width: 128px;
+        height: 40px;
+
+        background: #EFEFEF;
+        border-radius: 12px;
+        flex: none;
+        order: 0;
+        align-self: stretch;
+        flex-grow: 0;
+    }
+
+    div.dis_price {
+        /* Textfield */
+
+
+        /* Auto layout */
+
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        padding: 12px;
+        gap: 4px;
+
+        width: 128px;
+        height: 40px;
+
+        background: rgba(74, 196, 159, 0.1);
+        border-radius: 12px;
+
+        /* Inside auto layout */
+
+        flex: none;
+        order: 1;
+        align-self: stretch;
+        flex-grow: 0;
+    }
+
+    div.price {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0px;
+        gap: 12px;
+
+        width: 128px;
+
+
+        /* Inside auto layout */
+
+        flex: none;
+        order: 2;
+        flex-grow: 0;
+    }
+    </style>
 </head>
 
 <body>
@@ -27,12 +98,12 @@
                     <div class="state">상태</div>
                 </div>
                 <% for(var i = 0; i < items.length; i++) { %>
-                <div>
+                <div style="text-align: text-top;">
                     <% 
                         var string = items[i].i_image
                         var img = string.substr(string.search('/image/', 4))
                     %>
-                    <div class="image"><img src="<%= img %>" style="width: 5vw; min-width: 40px;"></div>
+                    <div class="image"><img src="<%= img %>" style="min-width: 40px;"></div>
                     <div class="title">
                         <%= items[i].i_name %>
                     </div>
@@ -44,16 +115,22 @@
                             <%= items[i].i_now_price %>
                         </div>
                     </div>
-                    <div class="date"><%= items[i].i_exp %></div>
+                    <div class="date">
+                        <%= items[i].i_exp %>
+                    </div>
                     <div class="state">
-                        <div><%= items[i].i_stauts %></div>
+                        <div>
+                            <%= items[i].i_stauts %>
+                        </div>
                         <select id="pick" class="sel">
                             <%
                                 var options = ["판매 대기", "판매 중", "판매 완료", "기타"];
                                 for(var j = 0; j < options.length; j++) {
                                     var selected = (items[i].i_status == j) ? "selected" : "";
                             %>
-                            <option value="<%= j %>" <%= selected %>><%= options[j] %></option>
+                            <option value="<%= j %>" <%=selected %>>
+                                <%= options[j] %>
+                            </option>
                             <%
                                 }
                             %>

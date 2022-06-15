@@ -7,7 +7,7 @@ function login() {
     const fpw = document.getElementById("fpw");
 
     formData.append('_id', fid.value)
-    formData.append('_pw', fpw.value)
+    formData.append('_pw', sha256(fpw.value))
 
     const options = {
         method: "POST",
